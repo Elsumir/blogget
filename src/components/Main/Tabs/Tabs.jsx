@@ -11,8 +11,6 @@ import {ReactComponent as BestIcon} from './img/best.svg';
 import {ReactComponent as HotIcon} from './img/hot.svg';
 import {debounceRaf} from '../../../utils/debounceRaf';
 
-import {Text} from '../../../ui/Text';
-
 const LIST = [
   {value: 'Главная', Icon: HomeIcon},
   {value: 'Топ', Icon: TopIcon},
@@ -60,8 +58,7 @@ export const Tabs = () => {
         <ul className={style.list} onClick={() => setIsDropdownOpen(false)}>
           {LIST.map(({value, id, Icon}) => (
             <li className={style.item} key={id}>
-              <Text
-                As="button"
+              <button
                 className={style.btn}
                 onClick={() => {
                   setIsNameBtn(value);
@@ -69,7 +66,7 @@ export const Tabs = () => {
               >
                 {value}
                 {Icon && <Icon width={25} height={25} />}
-              </Text>
+              </button>
             </li>
           ))}
         </ul>
