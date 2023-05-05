@@ -11,6 +11,8 @@ import {ReactComponent as BestIcon} from './img/best.svg';
 import {ReactComponent as HotIcon} from './img/hot.svg';
 import {debounceRaf} from '../../../utils/debounceRaf';
 
+import {Text} from '../../../ui/Text';
+
 const LIST = [
   {value: 'Главная', Icon: HomeIcon},
   {value: 'Топ', Icon: TopIcon},
@@ -64,7 +66,7 @@ export const Tabs = () => {
                   setIsNameBtn(value);
                 }}
               >
-                {value}
+                {<Text>{value}</Text>}
                 {Icon && <Icon width={25} height={25} />}
               </button>
             </li>
