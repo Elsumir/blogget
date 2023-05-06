@@ -33,6 +33,7 @@ export const Auth = ({token, delToken}) => {
       })
       .catch((err) => {
         console.err(err);
+        delToken();
         setAuth({});
       });
   });
