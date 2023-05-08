@@ -1,6 +1,12 @@
 import style from './PostPhoto.module.css';
-import notphoto from './img/notphoto.jpg';
 
-export const PostPhoto = (title) => (
-  <img className={style.img} src={notphoto} alt={title} />
+import PropTypes from 'prop-types';
+
+export const PostPhoto = ({title, images}) => (
+  <img className={style.img} src={images} alt={title} />
 );
+
+PostPhoto.propTypes = {
+  title: PropTypes.string,
+  images: PropTypes.string,
+};

@@ -1,42 +1,19 @@
 import style from './Auth.module.css';
-import PropTypes from 'prop-types';
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../ui/Text';
-import {useEffect, useState} from 'react';
-import {URL_API} from '../../../api/const';
+import {useState, useContext} from 'react';
+import {tokenContext} from '../../../context/tokenContex';
+import {authContext} from '../../../context/authContext';
 
-export const Auth = ({token, delToken}) => {
-  const [auth, setAuth] = useState({});
+export const Auth = () => {
+  const {delToken} = useContext(tokenContext);
+  const {auth} = useContext(authContext);
   const [btnClose, setBtnClose] = useState('dnone');
   const toggleBtn = () => {
     setBtnClose(btnClose === 'dnone' ? 'logout' : 'dnone');
   };
 
-  useEffect(() => {
-    if (!token) return;
-    fetch(`${URL_API}/api/v1/me`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 401) {
-          delToken;
-        } else {
-          return response.json();
-        }
-      })
-      .then(({name, icon_img: iconImg}) => {
-        const img = iconImg.replace(/\?.*$/, '');
-        setAuth({name, img});
-      })
-      .catch((err) => {
-        console.err(err);
-        delToken();
-        setAuth({});
-      });
-  });
   return (
     <div className={style.container}>
       {auth.name ? (
@@ -64,9 +41,4 @@ export const Auth = ({token, delToken}) => {
       )}
     </div>
   );
-};
-
-Auth.propTypes = {
-  token: PropTypes.string,
-  delToken: PropTypes.any,
 };
