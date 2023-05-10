@@ -12,7 +12,6 @@ export const List = () => {
   const renderPost = () => {
     for (let i = 0; i < best.length; i += 1) {
       const data = best[i].data;
-      data.preview.enabled = true;
       let img;
       if (data.thumbnail !== 'self' && data.thumbnail !== 'default') {
         img = data.preview.images[0].source.url;
@@ -32,7 +31,6 @@ export const List = () => {
       };
 
       postData.push(post);
-      console.log(data);
     }
   };
 
@@ -45,28 +43,3 @@ export const List = () => {
     </ul>
   );
 };
-
-// {
-//   thumbnail: '',
-//   title: 'Title2',
-//   author: 'Nickname2',
-//   ups: 4,
-//   date: '2023-05-31T12:46:00.000Z',
-//   id: 7768,
-// },
-// {
-//   thumbnail: '',
-//   title: 'Title3',
-//   author: 'Nickname3',
-//   ups: 24,
-//   date: '2023-05-01T12:46:00.000Z',
-//   id: 20999,
-// },
-// {
-//   thumbnail: '',
-//   title: 'Title4',
-//   author: 'Nickname4',
-//   ups: 2,
-//   date: '2023-05-05T12:46:00.000Z',
-//   id: 747389,
-// }
