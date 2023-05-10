@@ -13,6 +13,7 @@ export const Text = (prop) => {
     className,
     children,
     href,
+    onClick,
     center,
   } = prop;
 
@@ -26,7 +27,7 @@ export const Text = (prop) => {
     {[style[`fst${dsize}`]]: dsize}
   );
   return (
-    <As className={classes} href={href}>
+    <As className={classes} href={href} onClick={onClick}>
       {children}
     </As>
   );

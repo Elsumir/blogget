@@ -9,5 +9,5 @@ export const PostTime = ({date}) => (
 );
 
 PostTime.propTypes = {
-  date: PropTypes.string,
+  date: PropTypes.number,
 };

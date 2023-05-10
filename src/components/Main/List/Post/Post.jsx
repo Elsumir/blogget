@@ -7,12 +7,11 @@ import {ReactComponent as DeleteIcon} from './img/delete.svg';
 import {Text} from '../../../../ui/Text';
 
 export const Post = ({postData}) => {
-  const {title, author, ups, date, images} = postData;
-  console.log(images);
+  const {title, author, ups, date, selftext: markdown, images} = postData;
   return (
     <li className={style.post}>
       <PostPhoto title={title} images={images} />
-      <PostComtent title={title} author={author} />
+      <PostComtent title={title} author={author} markdown={markdown} />
       <div className={style.rating}>
         <button className={style.up} aria-label="Повысить рейтинг" />
         <Text
