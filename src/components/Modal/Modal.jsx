@@ -4,8 +4,15 @@ import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
 import {useEffect, useRef} from 'react';
+import {useCommentsData} from '../../hooks/useCommentsData';
+import {Text} from '../../ui/Text';
+import {FormComment} from './FormComment/FormComment';
+import {Comments} from './Comments/Comments';
 
-export const Modal = ({title, author, markdown, closeModal}) => {
+export const Modal = ({id, closeModal}) => {
+  const [comments] = useCommentsData(id);
+  const post = comments[0];
+
   const overlayRef = useRef(null);
 
   const handleClick = (e) => {
@@ -27,36 +34,55 @@ export const Modal = ({title, author, markdown, closeModal}) => {
       document.removeEventListener('click', handleClick);
     };
   });
-  return ReactDOM.createPortal(
-    <div className={style.overlay} ref={overlayRef}>
-      <div className={style.modal}>
-        <h2 className={style.title}>{title}</h2>
+  if (comments.length === 0) {
+    return ReactDOM.createPortal(
+      <div className={style.overlay} ref={overlayRef}>
+        <div className={style.modal}>
+          <Text As="h2" center className={style.title}>
+            Загрузка...
+          </Text>
+        </div>
+      </div>,
+      document.getElementById('modal-root')
+    );
+  } else {
+    return ReactDOM.createPortal(
+      <div className={style.overlay} ref={overlayRef}>
+        <div className={style.modal}>
+          <h2 className={style.title}>{post.title}</h2>
 
-        <div className={style.content}>
-          <Markdown
-            options={{
-              overrides: {
-                a: {
-                  props: {
-                    target: '_black',
+          <div className={style.content}>
+            <Markdown
+              options={{
+                overrides: {
+                  a: {
+                    props: {
+                      target: '_black',
+                    },
                   },
                 },
-              },
-            }}
-          >
-            {markdown}
-          </Markdown>
+              }}
+            >
+              {post.selftext}
+            </Markdown>
+          </div>
+
+          <Text As="p" className={style.author}>
+            {post.author}
+          </Text>
+
+          <FormComment />
+
+          <Comments comments={comments} />
+
+          <button className={style.close} onClick={closeModal}>
+            <CloseIcon />
+          </button>
         </div>
-
-        <p className={style.author}>{author}</p>
-
-        <button className={style.close} onClick={closeModal}>
-          <CloseIcon />
-        </button>
-      </div>
-    </div>,
-    document.getElementById('modal-root')
-  );
+      </div>,
+      document.getElementById('modal-root')
+    );
+  }
 };
 
 Modal.propTypes = {

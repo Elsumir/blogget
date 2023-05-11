@@ -16,7 +16,6 @@ export const useBestPost = () => {
       .then((response) => response.json())
       .then((data) => {
         const item = data.data.children;
-
         setBest(item);
       })
       .catch((err) => {
