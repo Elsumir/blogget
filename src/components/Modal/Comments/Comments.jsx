@@ -22,7 +22,6 @@ export const Comments = ({comments}) => {
     };
     arrComments.push(com);
   }
-  console.log(arrComments);
   return comment.length === 0 ? (
     <Text As="p" center>
       Нет комментариев
