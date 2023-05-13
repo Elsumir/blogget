@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import {useEffect, useContext, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {URL_API} from '../api/const';
-import {tokenContext} from '../context/tokenContex';
+import {useSelector} from 'react-redux';
 
 export const useBestPost = () => {
-  const {token} = useContext(tokenContext);
+  const token = useSelector((state) => state.token);
   const [best, setBest] = useState({});
   useEffect(() => {
     if (!token) return;

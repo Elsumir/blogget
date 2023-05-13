@@ -3,13 +3,20 @@ import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../ui/Text';
 import {useState, useContext} from 'react';
-import {tokenContext} from '../../../context/tokenContex';
 import {authContext} from '../../../context/authContext';
+import {deleteToken} from '../../../store';
+import {useDispatch} from 'react-redux';
 
 export const Auth = () => {
-  const {delToken} = useContext(tokenContext);
+  // const {delToken} = useContext(tokenContext);
   const {auth} = useContext(authContext);
   const [btnClose, setBtnClose] = useState('dnone');
+  const dispatch = useDispatch();
+
+  const delToken = () => {
+    dispatch(deleteToken());
+  };
+
   const toggleBtn = () => {
     setBtnClose(btnClose === 'dnone' ? 'logout' : 'dnone');
   };

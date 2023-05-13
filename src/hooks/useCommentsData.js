@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import {useEffect, useContext, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {URL_API} from '../api/const';
-import {tokenContext} from '../context/tokenContex';
+import {useSelector} from 'react-redux';
 
 export const useCommentsData = (id) => {
-  const {token} = useContext(tokenContext);
+  const token = useSelector((state) => state.token);
   const [comments, setCommentsData] = useState([]);
   useEffect(() => {
     if (!token) return;
@@ -31,7 +31,6 @@ export const useCommentsData = (id) => {
           },
         ]) => {
           const comments = children.map((item) => item.data);
-
           setCommentsData([post, comments]);
         }
       )

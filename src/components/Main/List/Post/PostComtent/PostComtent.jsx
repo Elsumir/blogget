@@ -41,7 +41,7 @@ export const PostComtent = ({title, author, id}) => {
 PostComtent.propTypes = {
   title: PropTypes.string,
   author: PropTypes.string,
-  markdown: PropTypes.string,
+  selftext: PropTypes.string,
   id: PropTypes.string,
   date: PropTypes.number,
 };
