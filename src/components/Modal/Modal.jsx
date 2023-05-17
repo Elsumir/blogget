@@ -8,9 +8,13 @@ import {useCommentsData} from '../../hooks/useCommentsData';
 import {Text} from '../../ui/Text';
 import {FormComment} from './FormComment/FormComment';
 import {Comments} from './Comments/Comments';
+// import {useSelector} from 'react-redux';
 
 export const Modal = ({id, closeModal}) => {
-  const [comments] = useCommentsData(id);
+  // const comments = useSelector((state) => state.comments.data);
+  // console.log(comments);
+  const [comments, loading] = useCommentsData(id);
+  console.log(loading);
   const post = comments[0];
   const overlayRef = useRef(null);
 
@@ -33,55 +37,45 @@ export const Modal = ({id, closeModal}) => {
       document.removeEventListener('click', handleClick);
     };
   });
-  if (comments.length === 0) {
-    return ReactDOM.createPortal(
-      <div className={style.overlay} ref={overlayRef}>
-        <div className={style.modal}>
-          <Text As="h2" center className={style.title}>
+
+  return ReactDOM.createPortal(
+    <div className={style.overlay} ref={overlayRef}>
+      <div className={style.modal}>
+        {loading ? (
+          <Text As="h2" center>
             Загрузка...
           </Text>
-        </div>
-      </div>,
-      document.getElementById('modal-root')
-    );
-  } else {
-    return ReactDOM.createPortal(
-      <div className={style.overlay} ref={overlayRef}>
-        <div className={style.modal}>
-          <h2 className={style.title}>{post.title}</h2>
-
-          <div className={style.content}>
-            <Markdown
-              options={{
-                overrides: {
-                  a: {
-                    props: {
-                      target: '_black',
+        ) : (
+          <>
+            <h2 className={style.title}>{post.title}</h2>
+            <div className={style.content}>
+              <Markdown
+                options={{
+                  overrides: {
+                    a: {
+                      props: {
+                        target: '_black',
+                      },
                     },
                   },
-                },
-              }}
-            >
-              {post.selftext}
-            </Markdown>
-          </div>
-
-          <Text As="p" className={style.author}>
-            {post.author}
-          </Text>
-
-          <FormComment />
-
-          <Comments comments={comments} />
-
-          <button className={style.close} onClick={closeModal}>
-            <CloseIcon />
-          </button>
-        </div>
-      </div>,
-      document.getElementById('modal-root')
-    );
-  }
+                }}
+              >
+                {post.selftext}
+              </Markdown>
+            </div>
+            <Text As="p" className={style.author}>
+              {post.author}
+            </Text>
+            <FormComment /> <Comments comments={comments} />
+            <button className={style.close} onClick={closeModal}>
+              <CloseIcon />
+            </button>
+          </>
+        )}
+      </div>
+    </div>,
+    document.getElementById('modal-root')
+  );
 };
 
 Modal.propTypes = {

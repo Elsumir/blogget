@@ -2,18 +2,19 @@ import style from './Auth.module.css';
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../ui/Text';
-import {useState, useContext} from 'react';
-import {authContext} from '../../../context/authContext';
-import {deleteToken} from '../../../store';
+import {useState} from 'react';
+import {deleteToken} from '../../../store/tokenReducer';
 import {useDispatch} from 'react-redux';
+import {useAuth} from '../../../hooks/useAuth';
+import AuthLoader from '../../../ui/AuthLoader';
 
 export const Auth = () => {
   // const {delToken} = useContext(tokenContext);
-  const {auth} = useContext(authContext);
+  const [auth, loading] = useAuth();
   const [btnClose, setBtnClose] = useState('dnone');
   const dispatch = useDispatch();
 
-  const delToken = () => {
+  const delToken = (e) => {
     dispatch(deleteToken());
   };
 
@@ -23,7 +24,9 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
-      {auth.name ? (
+      {loading ? (
+        <AuthLoader />
+      ) : auth.name ? (
         <>
           <button onClick={toggleBtn} className={style.btn}>
             <img
@@ -36,7 +39,7 @@ export const Auth = () => {
           </button>
 
           <button onClick={delToken} className={style[btnClose]}>
-            <Text As="a" href={'http://localhost:3000'}>
+            <Text As="a" href="/">
               Выйти
             </Text>
           </button>

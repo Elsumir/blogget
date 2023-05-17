@@ -1,46 +1,14 @@
-import PropTypes from 'prop-types';
-import {useEffect, useState} from 'react';
-import {URL_API} from '../api/const';
-import {useSelector} from 'react-redux';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {commentsRequestAsync} from '../store/comment/actionComment';
 
 export const useCommentsData = (id) => {
-  const token = useSelector((state) => state.token);
-  const [comments, setCommentsData] = useState([]);
+  const token = useSelector((state) => state.token.token);
+  const comments = useSelector((state) => state.comments.data);
+  const loading = useSelector((state) => state.comments.loading);
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (!token) return;
-    fetch(`${URL_API}/comments/${id}`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 401) {
-          throw new Error(response.status);
-        }
-        return response.json();
-      })
-      .then(
-        ([
-          {
-            data: {
-              children: [{data: post}],
-            },
-          },
-          {
-            data: {children},
-          },
-        ]) => {
-          const comments = children.map((item) => item.data);
-          setCommentsData([post, comments]);
-        }
-      )
-      .catch((err) => {
-        console.error(err);
-      });
+    dispatch(commentsRequestAsync(id));
   }, [token]);
-  return [comments];
-};
-
-useCommentsData.propTypes = {
-  token: PropTypes.string,
+  return [comments, loading];
 };

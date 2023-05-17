@@ -3,9 +3,10 @@ import Post from './Post';
 
 import notphoto from './img/notphoto.jpg';
 import {useBestPost} from '../../../hooks/useBestPost';
+import AuthLoader from '../../../ui/AuthLoader';
 
 export const List = () => {
-  const [best] = useBestPost();
+  const [best, loading] = useBestPost();
 
   const postData = [];
 
@@ -34,9 +35,13 @@ export const List = () => {
 
   return (
     <ul className={style.list}>
-      {postData.map((postData) => (
-        <Post key={postData.id} postData={postData} />
-      ))}
+      {loading ? (
+        <AuthLoader />
+      ) : (
+        postData.map((postData) => (
+          <Post key={postData.id} postData={postData} />
+        ))
+      )}
     </ul>
   );
 };

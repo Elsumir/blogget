@@ -1,30 +1,15 @@
-import PropTypes from 'prop-types';
-import {useEffect, useState} from 'react';
-import {URL_API} from '../api/const';
+import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {bestRequestAsync} from '../store/bestPost/actionBestPost';
 
 export const useBestPost = () => {
-  const token = useSelector((state) => state.token);
-  const [best, setBest] = useState({});
+  const best = useSelector((state) => state.best.data);
+  const token = useSelector((state) => state.token.token);
+  const loading = useSelector((state) => state.best.loading);
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (!token) return;
-    fetch(`${URL_API}/best`, {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const item = data.data.children;
-        setBest(item);
-      })
-      .catch((err) => {
-        console.err(err);
-      });
+    dispatch(bestRequestAsync());
   }, [token]);
-  return [best];
-};
-
-useBestPost.propTypes = {
-  token: PropTypes.string,
+  return [best, loading];
 };
