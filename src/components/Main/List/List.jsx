@@ -1,47 +1,39 @@
 import style from './List.module.css';
 import Post from './Post';
+import {useEffect, useRef} from 'react';
+// import AuthLoader from '../../../ui/AuthLoader';
 
-import notphoto from './img/notphoto.jpg';
 import {useBestPost} from '../../../hooks/useBestPost';
-import AuthLoader from '../../../ui/AuthLoader';
+import {useDispatch} from 'react-redux';
+import {bestRequestAsync} from '../../../store/bestPost/actionBestPost';
 
 export const List = () => {
-  const [best, loading] = useBestPost();
+  const [postData] = useBestPost();
+  const endList = useRef(null);
+  const dispatch = useDispatch();
 
-  const postData = [];
-
-  for (let i = 0; i < best.length; i += 1) {
-    const data = best[i].data;
-    let img;
-    if (data.thumbnail !== 'self' && data.thumbnail !== 'default') {
-      img = data.preview.images[0].source.url;
-    } else {
-      img = notphoto;
-    }
-
-    const post = {
-      thumbnail: '',
-      title: data.title,
-      author: data.author,
-      ups: data.ups,
-      date: data.created * 1000,
-      id: data.id,
-      images: img,
-      selftext: data.selftext,
-    };
-
-    postData.push(post);
-  }
+  useEffect(() => {
+    if (!postData.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          dispatch(bestRequestAsync());
+          console.log('Вижу');
+        }
+      },
+      {
+        rootMargin: '100px',
+      }
+    );
+    observer.observe(endList.current);
+  }, [endList.current]);
 
   return (
     <ul className={style.list}>
-      {loading ? (
-        <AuthLoader />
-      ) : (
-        postData.map((postData) => (
-          <Post key={postData.id} postData={postData} />
-        ))
-      )}
+      {postData.map((postData) => (
+        <Post key={postData.id} postData={postData} />
+      ))}
+      <li ref={endList} className={style.end} />
     </ul>
   );
 };

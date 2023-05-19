@@ -8,13 +8,9 @@ import {useCommentsData} from '../../hooks/useCommentsData';
 import {Text} from '../../ui/Text';
 import {FormComment} from './FormComment/FormComment';
 import {Comments} from './Comments/Comments';
-// import {useSelector} from 'react-redux';
 
 export const Modal = ({id, closeModal}) => {
-  // const comments = useSelector((state) => state.comments.data);
-  // console.log(comments);
   const [comments, loading] = useCommentsData(id);
-  console.log(loading);
   const post = comments[0];
   const overlayRef = useRef(null);
 
