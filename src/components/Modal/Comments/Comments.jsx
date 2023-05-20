@@ -28,17 +28,20 @@ export const Comments = ({comments}) => {
     </Text>
   ) : (
     <ul className={style.list}>
-      {arrComments.map((arrComments) => (
-        <li key={arrComments.id} className={style.item}>
-          <Text As="h2" className={style.author} size={18} tsize={22}>
-            {arrComments.author}
-          </Text>
-          <Text As="p" className={style.comment} size={14} tsize={18}>
-            {arrComments.body}
-          </Text>
-          <PostTime date={date} />
-        </li>
-      ))}
+      {arrComments.map(
+        (arrComments) =>
+          arrComments.body && (
+            <li key={arrComments.id} className={style.item}>
+              <Text As="h2" className={style.author} size={18} tsize={22}>
+                {arrComments.author}
+              </Text>
+              <Text As="p" className={style.comment} size={14} tsize={18}>
+                {arrComments.body}
+              </Text>
+              <PostTime date={date} />
+            </li>
+          )
+      )}
     </ul>
   );
 };

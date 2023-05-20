@@ -5,6 +5,7 @@ export const BEST_REQUEST = 'BEST_REQUEST';
 export const BEST_REQUEST_SUCCESS = 'BEST_REQUEST_SUCCESS';
 export const BEST_REQUEST_ERROR = 'BEST_REQUEST_ERROR';
 export const BEST_REQUEST_SUCCESS_AFTER = 'BEST_REQUEST_SUCCESS_AFTER';
+export const CHANGE_PAGE = 'CHANGE_PAGE';
 
 export const bestRequest = () => ({
   type: BEST_REQUEST,
@@ -23,8 +24,18 @@ export const bestRequestError = (error) => ({
   type: BEST_REQUEST_ERROR,
   error,
 });
+export const changePage = (page) => ({
+  type: CHANGE_PAGE,
+  page,
+});
 
-export const bestRequestAsync = () => (dispatch, getState) => {
+export const bestRequestAsync = (newPage) => (dispatch, getState) => {
+  let page = getState().best.page;
+
+  if (newPage) {
+    page = newPage;
+    dispatch(changePage(page));
+  }
   const token = getState().token.token;
   const after = getState().best.after;
   const loading = getState().best.loading;
@@ -33,7 +44,7 @@ export const bestRequestAsync = () => (dispatch, getState) => {
   if (!token || loading || isLast) return;
   dispatch(bestRequest());
 
-  axios(`${URL_API}/best?limit=5&${after ? `after=${after}` : ''}`, {
+  axios(`${URL_API}/${page}?limit=5&${after ? `after=${after}` : ''}`, {
     headers: {
       Authorization: `bearer ${token}`,
     },

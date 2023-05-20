@@ -4,6 +4,7 @@ import {useDispatch} from 'react-redux';
 import {updateToken} from './store/tokenReducer';
 import {getToken} from './api/token';
 import {Route, Routes} from 'react-router-dom';
+// import {FirstPage} from './components/Main/List/FirstPage/FirstPage';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const App = () => {
               <Main />
             </>
           }
-        />
+        ></Route>
       </Routes>
     </>
   );

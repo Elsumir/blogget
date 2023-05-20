@@ -7,7 +7,7 @@ import {
   SCOPE,
 } from './const.js';
 
-const searchParams = new URLSearchParams('');
+export const searchParams = new URLSearchParams('');
 
 searchParams.append('client_id', CLIENT_ID);
 searchParams.append('response_type', RESPONSE_TYPE);

@@ -3,6 +3,7 @@ import {
   BEST_REQUEST_ERROR,
   BEST_REQUEST_SUCCESS,
   BEST_REQUEST_SUCCESS_AFTER,
+  CHANGE_PAGE,
 } from './actionBestPost';
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   error: '',
   after: '',
   isLast: false,
+  page: '',
 };
 
 export const bestReducer = (state = initialState, action) => {
@@ -43,6 +45,13 @@ export const bestReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.error,
+      };
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        page: action.page,
+        after: '',
+        isLast: false,
       };
 
     default:

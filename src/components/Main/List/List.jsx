@@ -6,11 +6,18 @@ import {useEffect, useRef} from 'react';
 import {useBestPost} from '../../../hooks/useBestPost';
 import {useDispatch} from 'react-redux';
 import {bestRequestAsync} from '../../../store/bestPost/actionBestPost';
+import {Outlet, useParams} from 'react-router-dom';
 
 export const List = () => {
   const [postData] = useBestPost();
   const endList = useRef(null);
   const dispatch = useDispatch();
+  const {page} = useParams();
+  console.log('page: ', page);
+
+  useEffect(() => {
+    dispatch(bestRequestAsync(page));
+  }, [page]);
 
   useEffect(() => {
     if (!postData.length) return;
@@ -26,14 +33,22 @@ export const List = () => {
       }
     );
     observer.observe(endList.current);
+    return () => {
+      if (endList.current) {
+        observer.unobserve(endList.current);
+      }
+    };
   }, [endList.current]);
 
   return (
-    <ul className={style.list}>
-      {postData.map((postData) => (
-        <Post key={postData.id} postData={postData} />
-      ))}
-      <li ref={endList} className={style.end} />
-    </ul>
+    <>
+      <ul className={style.list}>
+        {postData.map((postData) => (
+          <Post key={postData.id} postData={postData} />
+        ))}
+        <li ref={endList} className={style.end} />
+      </ul>
+      <Outlet />
+    </>
   );
 };
