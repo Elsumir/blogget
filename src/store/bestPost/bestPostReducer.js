@@ -2,15 +2,15 @@ import {
   BEST_REQUEST,
   BEST_REQUEST_ERROR,
   BEST_REQUEST_SUCCESS,
-  BEST_REQUEST_POSTS,
+  BEST_REQUEST_SUCCESS_AFTER,
 } from './actionBestPost';
 
 const initialState = {
   loading: false,
   data: [],
-  posts: [],
   error: '',
   after: '',
+  isLast: false,
 };
 
 export const bestReducer = (state = initialState, action) => {
@@ -25,20 +25,24 @@ export const bestReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-
         data: action.data,
         after: action.after,
+        isLast: !action.after,
+      };
+    case BEST_REQUEST_SUCCESS_AFTER:
+      return {
+        ...state,
+        loading: false,
+        data: [...state.data, ...action.data],
+        error: '',
+        after: action.after,
+        isLast: !action.after,
       };
     case BEST_REQUEST_ERROR:
       return {
         ...state,
         loading: false,
         error: action.error,
-      };
-    case BEST_REQUEST_POSTS:
-      return {
-        ...state,
-        posts: action.posts,
       };
 
     default:

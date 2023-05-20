@@ -1,10 +1,7 @@
 import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
-import {
-  bestRequestAsync,
-  bestRequestPosts,
-} from '../store/bestPost/actionBestPost';
+import {bestRequestAsync} from '../store/bestPost/actionBestPost';
 import notphoto from '../components/Main/List/img/notphoto.jpg';
 
 // import AuthLoader from '../ui/AuthLoader';
@@ -20,12 +17,16 @@ export const useBestPost = () => {
   }, [token]);
   for (let i = 0; i < best.length; i += 1) {
     const data = best[i].data;
-    let img;
-    if (data.thumbnail !== 'self' && data.thumbnail !== 'default') {
-      img = data.preview.images[0].source.url;
-    } else {
-      img = notphoto;
-    }
+    const img = notphoto;
+    // if (
+    //   data.thumbnail !== 'self' &&
+    //   data.thumbnail !== 'default' &&
+    //   data.thumbnail !== 'spoiler'
+    // ) {
+    //   img = data.preview.images[0].source.url;
+    // } else {
+    //   img = notphoto;
+    // }
 
     const post = {
       thumbnail: '',
@@ -39,8 +40,6 @@ export const useBestPost = () => {
     };
     postData.push(post);
   }
-
-  dispatch(bestRequestPosts(postData));
 
   return [postData];
 };
