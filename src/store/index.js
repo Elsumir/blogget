@@ -1,8 +1,8 @@
 import {combineReducers, createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from '@redux-devtools/extension';
 import {commentReducer} from './commentReducer';
-import {tokenReducer} from './tokenReducer';
-import {tokenMiddleware} from './tokenReducer';
+import {tokenReducer} from './token/tokenReducer';
+import {tokenMiddleware} from './token/actionToken';
 import thunk from 'redux-thunk';
 import {authReducer} from './auth/authReducer';
 import {bestReducer} from './bestPost/bestPostReducer';

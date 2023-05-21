@@ -3,7 +3,7 @@ import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../ui/Text';
 import {useState} from 'react';
-import {deleteToken} from '../../../store/tokenReducer';
+import {deleteToken} from '../../../store/token/actionToken';
 import {useDispatch} from 'react-redux';
 import {useAuth} from '../../../hooks/useAuth';
 import AuthLoader from '../../../ui/AuthLoader';
@@ -21,7 +21,6 @@ export const Auth = () => {
   const toggleBtn = () => {
     setBtnClose(btnClose === 'dnone' ? 'logout' : 'dnone');
   };
-
   return (
     <div className={style.container}>
       {loading ? (

@@ -13,7 +13,6 @@ export const List = () => {
   const endList = useRef(null);
   const dispatch = useDispatch();
   const {page} = useParams();
-  console.log('page: ', page);
 
   useEffect(() => {
     dispatch(bestRequestAsync(page));
