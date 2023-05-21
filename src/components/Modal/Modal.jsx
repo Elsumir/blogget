@@ -16,6 +16,7 @@ export const Modal = () => {
   const [comments, loading] = useCommentsData(id);
   const post = comments[0];
   const overlayRef = useRef(null);
+  console.log(comments);
 
   const handleClick = (e) => {
     const target = e.target;

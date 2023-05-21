@@ -7,6 +7,7 @@ import {useBestPost} from '../../../hooks/useBestPost';
 import {useDispatch} from 'react-redux';
 import {bestRequestAsync} from '../../../store/bestPost/actionBestPost';
 import {Outlet, useParams} from 'react-router-dom';
+import {Text} from '../../../ui/Text';
 
 export const List = () => {
   const [postData] = useBestPost();
@@ -45,7 +46,13 @@ export const List = () => {
         {postData.map((postData) => (
           <Post key={postData.id} postData={postData} />
         ))}
-        <li ref={endList} className={style.end} />
+        {postData.length === 0 ? (
+          <Text As="h2" center color="orange">
+            Постов еще нет
+          </Text>
+        ) : (
+          <li ref={endList} className={style.end} />
+        )}
       </ul>
       <Outlet />
     </>

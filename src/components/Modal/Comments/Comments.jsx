@@ -2,15 +2,13 @@ import style from './Comments .module.css';
 import {PropTypes} from 'prop-types';
 import {Text} from '../../../ui/Text';
 import {PostTime} from '../../Main/List/Post/PostTime/PostTime';
+import {useSelector} from 'react-redux';
 
 export const Comments = ({comments}) => {
-  const comment = comments[1];
+  const comment = useSelector((state) => state.comments.comments);
+  const post = useSelector((state) => state.comments.post);
+  console.log(comment);
   const arrComments = [];
-  let date;
-
-  if (comment.length !== 0) {
-    date = comments[1][0].created * 1000;
-  }
 
   for (let i = 0; i < comment.length; i += 1) {
     const data = comment[i];
@@ -38,7 +36,7 @@ export const Comments = ({comments}) => {
               <Text As="p" className={style.comment} size={14} tsize={18}>
                 {arrComments.body}
               </Text>
-              <PostTime date={date} />
+              <PostTime date={post.created * 1000} />
             </li>
           )
       )}
