@@ -25,7 +25,6 @@ export const commentsSlice = createSlice({
     },
     [commentsRequestAsync.rejected.type]: (state, action) => {
       state.error = action.error;
-      state.error = '';
     },
   },
 });

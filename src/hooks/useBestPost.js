@@ -18,18 +18,15 @@ export const useBestPost = () => {
   for (let i = 0; i < best.length; i += 1) {
     const data = best[i].data;
     const img = notphoto;
-    // if (
-    //   data.thumbnail !== 'self' &&
-    //   data.thumbnail !== 'default' &&
-    //   data.thumbnail !== 'spoiler'
-    // ) {
-    //   img = data.preview.images[0].source.url;
-    // } else {
-    //   img = notphoto;
-    // }
+    let thumbnails;
+    if (data.thumbnail === 'default') {
+      thumbnails = img;
+    } else {
+      thumbnails = data.thumbnail;
+    }
 
     const post = {
-      thumbnail: '',
+      thumbnail: thumbnails,
       title: data.title,
       author: data.author,
       ups: data.ups,

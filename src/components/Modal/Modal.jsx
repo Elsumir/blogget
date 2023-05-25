@@ -9,14 +9,18 @@ import {Text} from '../../ui/Text';
 import {FormComment} from './FormComment/FormComment';
 import {Comments} from './Comments/Comments';
 import {useNavigate, useParams} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 export const Modal = () => {
   const {id, page} = useParams();
+
   const navigate = useNavigate();
-  const [comments, loading] = useCommentsData(id);
-  const post = comments[0];
+  const [comments] = useCommentsData(id);
+  const post = useSelector((state) => state.comments.post);
+  const loading = useSelector((state) => state.comments.loading);
+  // const comments = useSelector((state) => state.comments.comments);
+  // const post = comments[0];
   const overlayRef = useRef(null);
-  console.log(comments);
 
   const handleClick = (e) => {
     const target = e.target;

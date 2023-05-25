@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux';
 export const Comments = ({comments}) => {
   const comment = useSelector((state) => state.comments.comments);
   const post = useSelector((state) => state.comments.post);
-  console.log(comment);
+  console.log(comments);
   const arrComments = [];
 
   for (let i = 0; i < comment.length; i += 1) {
