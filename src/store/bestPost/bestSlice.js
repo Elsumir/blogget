@@ -15,6 +15,7 @@ export const bestSlice = createSlice({
   initialState,
   reducers: {
     changePage: (state, action) => {
+      console.log(action);
       state.page = action.payload;
       state.after = '';
       state.isLast = false;
