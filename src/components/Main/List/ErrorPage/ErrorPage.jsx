@@ -9,7 +9,7 @@ export const ErrorPage = () => {
   const accessToken = `#access_token=`;
   const firstPage = `auth${accessToken}${token}${tokenType}${scope}`;
   const test = window.location.href;
-  const testR = test.replace('http://localhost:3000/', '');
+  const testR = test.replace('https://blogget-iota.vercel.app/', '');
   console.log(firstPage === testR);
   return (
     <>
